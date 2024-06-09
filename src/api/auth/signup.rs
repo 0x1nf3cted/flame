@@ -1,10 +1,13 @@
-use std::{error::Error, sync::Arc};
+use std::sync::Arc;
+use thiserror::Error;
 
+extern crate bcrypt;
 use actix_web::{
     post,
     web::{self, Json},
     HttpResponse, Responder,
 };
+use bcrypt::{hash, BcryptError, DEFAULT_COST};
 use serde::{Deserialize, Serialize};
 use sqlx::{Pool, Postgres};
 use uuid::Uuid;
@@ -18,27 +21,34 @@ pub struct UserInfo {
 
 #[post("/signup")]
 pub async fn signup(body: Json<UserInfo>, pool: web::Data<Arc<Pool<Postgres>>>) -> impl Responder {
-    println!("hello");
     let b = body.into_inner();
-    println!("hello");
     if let Err(e) = create_user(b.clone(), pool.clone()).await {
         eprintln!("Error creating user: {}", e);
-        return HttpResponse::InternalServerError().finish();
+        return HttpResponse::InternalServerError().body("Internal Server Error");
     }
-    println!("hello");
-    return HttpResponse::Accepted().finish();
+    return HttpResponse::Created().body(b.username + " Created!");
 }
+#[derive(Error, Debug)]
+pub enum CustomError {
+    #[error("Database error")]
+    DatabaseError(#[from] sqlx::Error),
+    #[error("Hashing error")]
+    HashingError(#[from] BcryptError),
+}
+
+impl actix_web::ResponseError for CustomError {}
 pub async fn create_user(
     user_info: UserInfo,
     pool: web::Data<Arc<Pool<Postgres>>>,
-) -> Result<(), sqlx::Error> {
+) -> Result<(), CustomError> {
     let query = "INSERT INTO accounts (id, username, email, password) VALUES ($1, $2 , $3, $4)";
     let id = Uuid::new_v4().to_string();
+    let password = hash(&user_info.password, DEFAULT_COST)?;
     sqlx::query(query)
         .bind(&id)
         .bind(&user_info.username)
         .bind(&user_info.email)
-        .bind(&user_info.password)
+        .bind(&password)
         .execute(&***pool)
         .await?;
 

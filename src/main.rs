@@ -10,13 +10,8 @@ use actix_web::{
     App, HttpServer,
 };
 
-use sqlx::{Pool, Postgres};
 mod config;
 use config::db::config_db;
-
-// pub struct AppState {
-//     pub db: Arc<Pool<Postgres>>,
-// }
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
