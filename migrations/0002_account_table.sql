@@ -1,0 +1,6 @@
+ALTER TABLE accounts DROP CONSTRAINT accounts_pkey;
+
+ALTER TABLE accounts ALTER COLUMN id TYPE TEXT;
+
+ALTER TABLE accounts ADD PRIMARY KEY (id);
+
