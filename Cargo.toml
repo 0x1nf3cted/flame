@@ -20,3 +20,7 @@ dotenv = "0.15.0"
 once_cell = "1.9"
 bcrypt = "0.15"
 thiserror = "1.0.61"
+actix-redis = "0.10"
+redis = { version = "0.25.3", features = ["async-std-native-tls-comp"] }
+rand = "0.8"
+jsonwebtoken = "7.0"
