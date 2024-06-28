@@ -1,6 +1,9 @@
 CREATE TABLE accounts (
   id UUID PRIMARY KEY,
-  username VARCHAR UNIQUE NOT NULL,
+  username VARCHAR UNIQUE,
   email TEXT UNIQUE NOT NULL,
-  password TEXT NOT NULL DEFAULT FALSE
+  completed_account BOOLEAN NOT NULL DEFAULT FALSE,
+  confirmed_email BOOLEAN NOT NULL DEFAULT FALSE
+
 );
+
