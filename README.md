@@ -5,7 +5,7 @@ Flame is a self-hosted platform designed to deliver a secure, safe, and enjoyabl
 </p>
 
 <p align="center">
-  <img src="./assets/tn.jpg" />
+  <img src="./assets/image.jpg" />
 </p> 
 
 user will be able to:
