@@ -1,4 +1,12 @@
-# personal End-to-End asymetric encryption messaging app
+<h1 align="center">Flame : End-to-End asymmetric encryption messaging app</h1>
+
+<p align="center">
+Flame is a self-hosted platform designed to deliver a secure, safe, and enjoyable messaging experience to the end users ensuring maximum privacy with ease of use and control  on the overall system.
+</p>
+
+<p align="center">
+  <img src="./assets/tn.jpg" />
+</p> 
 
 user will be able to:
 
