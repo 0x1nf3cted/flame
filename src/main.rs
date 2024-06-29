@@ -12,8 +12,8 @@ mod utils;
 
 #[actix_web::main]
 async fn main() -> std::io::Result<()> {
-    std::env::set_var("RUST_LOG", "debug"); // Set the logging level to debug
-    std::env::set_var("LOGGING", "debug"); // Optional: Set any additional logging-related env vars
+    std::env::set_var("RUST_LOG", "debug");
+    std::env::set_var("LOGGING", "debug");
     std::env::set_var("BACKTRACE", "1");
 
     env_logger::Builder::from_env(Env::default().default_filter_or("debug")).init();
@@ -41,8 +41,8 @@ async fn main() -> std::io::Result<()> {
         let logger = Logger::default();
 
         App::new()
-            .app_data(web::Data::new(db_pool.clone())) // Database pool wrapped in web::Data
-            .app_data(web::Data::new(redis_conn.clone())) // Redis connection wrapped in web::Data
+            .app_data(web::Data::new(db_pool.clone()))
+            .app_data(web::Data::new(redis_conn.clone()))
             .wrap(logger)
             .service(
                 web::scope("/api/v1/auth")
